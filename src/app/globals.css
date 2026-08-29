@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+:root {
+  /* Editorial palette — warm paper, ink darks and a restrained bronze accent.
+     Moved away from the SaaS electric-blue / lime look toward premium,
+     architectural, image-led design. */
+  --obsidian: #16120c;
+  --navy: #1c1710;
+  --navy-2: #262016;
+  --blue: #96531f;
+  --blue-bright: #bf8b45;
+  --lime: #cdab70;
+  --off-white: #f3efe7;
+  --steel: #8b8477;
+  --line: rgba(255, 253, 248, 0.12);
+  --line-soft: rgba(255, 253, 248, 0.06);
+
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-mono-tech);
+}
+
+@theme inline {
+  --color-obsidian: var(--obsidian);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-blue: var(--blue);
+  --color-blue-bright: var(--blue-bright);
+  --color-lime: var(--lime);
+  --color-off-white: var(--off-white);
+  --color-steel: var(--steel);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--off-white);
+  color: var(--obsidian);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--obsidian);
+  color: var(--off-white);
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--blue-bright);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Thin technical corner ticks — signature motif echoing the logo's seal. */
+.tick-frame {
+  position: relative;
+}
+.tick-frame::before,
+.tick-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.tick-frame::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+.tick-frame::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.blueprint-grid { background-image: linear-gradient(rgba(245,247,250,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(245,247,250,.08) 1px, transparent 1px); background-size: 46px 46px; }
+.section-kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
+.cut-line { position: relative; }
+.cut-line::after { content:""; position:absolute; right:0; top:50%; width:34%; height:1px; background:rgba(10,13,18,.12); }
+
+/* Warm, understated hero backdrop — faint toned washes, no neon glow. */
+body { overflow-x: hidden; }
+.hero-aurora { background: radial-gradient(120% 92% at 82% 6%, rgba(205, 171, 112, 0.09), transparent 48%), radial-gradient(120% 92% at 4% 100%, rgba(139, 122, 92, 0.08), transparent 52%), linear-gradient(122deg, #16120c 0%, #1c1710 55%, #171209 100%); }
+.luxury-button { position: relative; overflow: hidden; isolation: isolate; transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease, background-color .35s ease; }
+.luxury-button:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(22,18,12,.22); }
+.blueprint-grid { background-image: linear-gradient(rgba(255,253,248,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,253,248,.045) 1px, transparent 1px); background-size: 46px 46px; }
+@keyframes premiumFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-10px,0)} }
+.premium-float { animation:premiumFloat 6s ease-in-out infinite; }
+.image-luxury { transition: transform .9s cubic-bezier(.16,1,.3,1), filter .9s ease; }
+.group:hover .image-luxury { transform:scale(1.04); }
+/* =====================================================
+   ADMIN WORKSPACE — independent full-screen control room
+   Kept deliberately separate from the public visual system.
+   ===================================================== */
+
+.admin-shell {
+  background-color: #12100c;
+  color: var(--off-white);
+}
+
+/* Technical backdrop: faint grid + blue/lime radial glows, slow drift */
+.admin-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.admin-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 55% 44% at 6% -8%, rgba(205, 171, 112, 0.1), transparent 62%),
+    radial-gradient(ellipse 46% 40% at 96% 106%, rgba(139, 122, 92, 0.07), transparent 62%),
+    radial-gradient(ellipse 34% 30% at 70% 16%, rgba(191, 139, 69, 0.05), transparent 66%);
+}
+.admin-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 247, 250, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 247, 250, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 95% 92% at 50% 0%, black 22%, transparent 96%);
+  mask-image: radial-gradient(ellipse 95% 92% at 50% 0%, black 22%, transparent 96%);
+  animation: admin-grid-drift 80s linear infinite;
+}
+@keyframes admin-glow-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
+  100% { transform: translate3d(-26px, 18px, 0) scale(1.03); opacity: 1; }
+}
+@keyframes admin-grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 44px 44px; }
+}
+
+/* Typography hierarchy */
+.admin-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.admin-kicker::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--blue);
+  opacity: 0.75;
+  flex: none;
+}
+.admin-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 4.5vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  color: var(--off-white);
+}
+.admin-description {
+  color: rgba(245, 247, 250, 0.5);
+  font-size: 0.925rem;
+  line-height: 1.65;
+  max-width: 58ch;
+}
+.admin-th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 247, 250, 0.4);
+  text-align: left;
+  padding: 0 1rem 0.75rem 0;
+  white-space: nowrap;
+}
+
+/* Cards — architectural, low radius, engineering motif */
+.admin-card {
+  position: relative;
+  background: rgba(245, 247, 250, 0.03);
+  border: 1px solid rgba(245, 247, 250, 0.08);
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    transform 0.3s ease, box-shadow 0.3s ease;
+}
+.admin-card::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background-color 0.3s ease;
+}
+.admin-card-hover:hover {
+  border-color: rgba(191, 139, 69, 0.5);
+  background: rgba(191, 139, 69, 0.05);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.35);
+}
+.admin-card-hover:hover::after {
+  background: var(--blue-bright);
+}
+
+/* Inputs (dark theme) */
+.admin-input {
+  width: 100%;
+  border: 1px solid rgba(245, 247, 250, 0.14);
+  background: rgba(4, 7, 11, 0.55);
+  color: var(--off-white);
+  padding: 0.72rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0;
+  transition: border-color 0.2s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.admin-input::placeholder { color: rgba(245, 247, 250, 0.3); }
+.admin-input:hover { border-color: rgba(245, 247, 250, 0.24); }
+.admin-input:focus {
+  outline: none;
+  border-color: var(--blue-bright);
+  background: rgba(10, 9, 7, 0.85);
+  box-shadow: 0 0 0 3px rgba(191, 139, 69, 0.16);
+}
+select.admin-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa7b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px;
+  padding-right: 2.5rem;
+}
+textarea.admin-input { min-height: 7rem; }
+.admin-input-lg { min-height: 21rem !important; }
+/* Buttons */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  padding: 0.72rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.admin-btn-primary { background: var(--blue); color: #fff; }
+.admin-btn-primary:hover {
+  background: var(--blue-bright);
+  box-shadow: 0 10px 26px rgba(22, 18, 12, 0.3);
+  transform: translateY(-1px);
+}
+.admin-btn-lime { background: var(--lime); color: #16120c; }
+.admin-btn-lime:hover {
+  background: #e2ca99;
+  transform: translateY(-1px);
+}
+.admin-btn-ghost {
+  border-color: rgba(245, 247, 250, 0.16);
+  color: rgba(245, 247, 250, 0.78);
+  background: rgba(245, 247, 250, 0.03);
+}
+.admin-btn-ghost:hover {
+  border-color: rgba(245, 247, 250, 0.3);
+  color: #fff;
+  background: rgba(245, 247, 250, 0.08);
+}
+.admin-btn-danger {
+  border-color: rgba(239, 68, 68, 0.32);
+  color: #ff8f8f;
+  background: rgba(239, 68, 68, 0.07);
+}
+.admin-btn-danger:hover {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.55);
+  color: #ffb4b4;
+}
+
+/* Status / payment badges — distinct signal per state */
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid transparent;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.admin-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  flex: none;
+}
+.admin-status--steel {
+  color: #b5ae9f;
+  background: rgba(139, 132, 119, 0.1);
+  border-color: rgba(139, 132, 119, 0.26);
+}
+.admin-status--blue {
+  color: #d9b06a;
+  background: rgba(191, 139, 69, 0.1);
+  border-color: rgba(191, 139, 69, 0.3);
+}
+.admin-status--lime {
+  color: #e2ca99;
+  background: rgba(205, 171, 112, 0.08);
+  border-color: rgba(205, 171, 112, 0.26);
+}
+.admin-status--amber {
+  color: #ffc675;
+  background: rgba(255, 166, 38, 0.1);
+  border-color: rgba(255, 166, 38, 0.28);
+}
+.admin-status--green {
+  color: #76e8a8;
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.28);
+}
+.admin-status--red {
+  color: #ff9191;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.admin-status--purple {
+  color: #c3aeff;
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.32);
+}
+
+/* Links + subtle helpers */
+.admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--blue-bright);
+  transition: color 0.2s ease;
+}
+.admin-link:hover { color: var(--lime); }
+.admin-hairline { border-color: rgba(245, 247, 250, 0.08); }
+.admin-muted { color: rgba(245, 247, 250, 0.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-backdrop::before,
+  .admin-backdrop::after {
+    animation: none;
+  }
+  .admin-card,
+  .admin-btn,
+  .admin-link,
+  .admin-input {
+    transition: none;
+  }
+}

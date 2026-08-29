@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  posts       Post[]
+  products    Product[]
+}
+
+model Tag {
+  id    String    @id @default(cuid())
+  name  String    @unique
+  slug  String    @unique
+  posts PostTag[]
+}
+
+model Product {
+  id             String        @id @default(cuid())
+  legacyId       String?       @unique
+  name           String
+  slug           String        @unique
+  description    String
+  price          Int
+  compareAtPrice Int?
+  image          String
+  images         Json?
+  brand          String?
+  sku            String?       @unique
+  stock          Int           @default(0)
+  status         ProductStatus @default(ACTIVE)
+  seoTitle       String?
+  seoDescription String?
+  categoryId     String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  orderItems     OrderItem[]
+  category       Category?     @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId, status])
+  @@index([status, createdAt])
+  @@index([price])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Order {
+  id                 String        @id @default(cuid())
+  orderNumber        String        @unique
+  customerId         String
+  subtotal           Int
+  shippingFee        Int           @default(0)
+  total              Int
+  currency           String        @default("GHS")
+  paymentStatus      PaymentStatus @default(PENDING)
+  orderStatus        OrderStatus   @default(PENDING)
+  paymentReference   String?       @unique
+  paystackAccessCode String?
+  shippingName       String
+  shippingPhone      String
+  shippingAddress    String
+  shippingCity       String
+  notes              String?
+  paidAt             DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  customer           Customer      @relation(fields: [customerId], references: [id])
+  events             OrderEvent[]
+  items              OrderItem[]
+
+  @@index([customerId, createdAt])
+  @@index([paymentStatus, orderStatus])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String
+  productName String
+  unitPrice   Int
+  quantity    Int
+  createdAt   DateTime @default(now())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+model Post {
+  id             String     @id @default(cuid())
+  title          String
+  slug           String     @unique
+  excerpt        String
+  content        String
+  featuredImage  String?
+  authorName     String
+  status         PostStatus @default(DRAFT)
+  seoTitle       String?
+  seoDescription String?
+  categoryId     String?
+  publishedAt    DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  category       Category?  @relation(fields: [categoryId], references: [id])
+  tags           PostTag[]
+
+  @@index([status, publishedAt])
+  @@index([categoryId, status])
+}
+
+model PostTag {
+  postId String
+  tagId  String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@index([tagId])
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  READY
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}

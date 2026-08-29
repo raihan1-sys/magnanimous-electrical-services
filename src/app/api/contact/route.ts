@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";import { z } from "zod";
+const schema=z.object({name:z.string().min(2),phone:z.string().min(6),email:z.string().email().optional().or(z.literal("")),service:z.string().min(2),device:z.string().optional(),description:z.string().min(5),preferredContact:z.string().optional()});
+export async function POST(req:Request){try{schema.parse(await req.json());return NextResponse.json({ok:true,message:"Your request has been received. We will contact you using your preferred method."})}catch{return NextResponse.json({error:"Please check the required fields."},{status:400})}}
