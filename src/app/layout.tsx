@@ -28,6 +28,13 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
+
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
+
   openGraph: {
     title: `${siteConfig.businessName} — ${siteConfig.tagline}`,
     description: siteConfig.description,
