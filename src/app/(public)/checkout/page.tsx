@@ -87,6 +87,7 @@ I'd like to place an order.
 
 ORDER
 ${orderLines}
+Order number: ${data.orderNumber}
 
 Total: ${ghs(total)}
 
@@ -101,18 +102,7 @@ Phone: ${shipping.phone}
 Address: ${shipping.address}
 City: ${shipping.city}
 
-${notes ? `Notes: ${notes}\n\n` : ""}Order number: ${data.orderNumber}
-
-MOBILE MONEY PAYMENT METHOD
-Network: MTN Mobile Money
-Number: 0257815136
-Account Name: ERIC ASARE
-Amount to Pay: ${ghs(total)}
-
-Make payment using the details above and send the payment confirmation here.
-
-Thank you.`;
-
+${notes ? `Notes: ${notes}\n\n` : ""}Thank you.`;
       const whatsappUrl = `${siteConfig.whatsappHref}?text=${encodeURIComponent(
         message
       )}`;
@@ -231,7 +221,33 @@ Thank you.`;
               />
             </label>
           </section>
+          <div className="border border-obsidian/10 bg-white p-5">
+  <p className="font-mono text-xs text-blue">
+    MOBILE MONEY PAYMENT
+  </p>
 
+  <h2 className="mt-2 font-display text-2xl">
+    Pay via MTN Mobile Money
+  </h2>
+
+  <div className="mt-4 space-y-1 text-sm text-obsidian/60">
+    <p>
+      <span className="font-medium text-obsidian">Network:</span> MTN Mobile Money
+    </p>
+    <p>
+      <span className="font-medium text-obsidian">Number:</span> 0257815136
+    </p>
+    <p>
+      <span className="font-medium text-obsidian">Account Name:</span> ERIC ASARE
+    </p>
+  </div>
+
+  <p className="mt-4 text-sm leading-relaxed text-obsidian/50">
+    Your order will be created first. After you submit your order, WhatsApp
+    will open with your order details and the exact amount to pay. Please send
+    your Mobile Money payment confirmation on WhatsApp after making payment.
+  </p>
+</div>
           {error && (
             <p className="border border-red-300 bg-red-50 p-3 text-sm text-red-700">
               {error}
