@@ -22,12 +22,20 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://magnanimouselectrical.com"),
+  metadataBase: new URL(
+    "https://magnanimous-electrical-services.vercel.app"
+  ),
+
   title: {
     default: `${siteConfig.businessName} — ${siteConfig.tagline}`,
     template: `%s — ${siteConfig.shortName}`,
   },
+
   description: siteConfig.description,
+
+  verification: {
+    google: "0MbhznSF2KMhWqFW3tM2uDFGYgWSGsjH4pYA9jzUp5Y",
+  },
 
   icons: {
     icon: "/icon.png",
