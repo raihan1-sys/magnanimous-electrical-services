@@ -80,7 +80,6 @@ model Order {
   paymentStatus      PaymentStatus @default(PENDING)
   orderStatus        OrderStatus   @default(PENDING)
   paymentReference   String?       @unique
-  paystackAccessCode String?
   shippingName       String
   shippingPhone      String
   shippingAddress    String

@@ -89,7 +89,6 @@ CREATE TABLE "Order" (
     "paymentStatus" "PaymentStatus" NOT NULL DEFAULT 'PENDING',
     "orderStatus" "OrderStatus" NOT NULL DEFAULT 'PENDING',
     "paymentReference" TEXT,
-    "paystackAccessCode" TEXT,
     "shippingName" TEXT NOT NULL,
     "shippingPhone" TEXT NOT NULL,
     "shippingAddress" TEXT NOT NULL,
