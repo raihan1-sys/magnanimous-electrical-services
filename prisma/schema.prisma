@@ -70,27 +70,27 @@ model Customer {
 }
 
 model Order {
-  id                 String        @id @default(cuid())
-  orderNumber        String        @unique
-  customerId         String
-  subtotal           Int
-  shippingFee        Int           @default(0)
-  total              Int
-  currency           String        @default("GHS")
-  paymentStatus      PaymentStatus @default(PENDING)
-  orderStatus        OrderStatus   @default(PENDING)
-  paymentReference   String?       @unique
-  shippingName       String
-  shippingPhone      String
-  shippingAddress    String
-  shippingCity       String
-  notes              String?
-  paidAt             DateTime?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  customer           Customer      @relation(fields: [customerId], references: [id])
-  events             OrderEvent[]
-  items              OrderItem[]
+  id               String        @id @default(cuid())
+  orderNumber      String        @unique
+  customerId       String
+  subtotal         Int
+  shippingFee      Int           @default(0)
+  total            Int
+  currency         String        @default("GHS")
+  paymentStatus    PaymentStatus @default(PENDING)
+  orderStatus      OrderStatus   @default(PENDING)
+  paymentReference String?       @unique
+  shippingName     String
+  shippingPhone    String
+  shippingAddress  String
+  shippingCity     String
+  notes            String?
+  paidAt           DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  customer         Customer      @relation(fields: [customerId], references: [id])
+  events           OrderEvent[]
+  items            OrderItem[]
 
   @@index([customerId, createdAt])
   @@index([paymentStatus, orderStatus])

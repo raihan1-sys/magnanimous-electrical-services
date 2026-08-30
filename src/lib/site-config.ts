@@ -13,9 +13,9 @@ export const siteConfig = {
   location: "A.T.U Campus, Old Hostel",
   locationLine2: "Accra, Ghana",
   mapsHref: "https://www.google.com/maps/search/?api=1&query=Accra%20Technical%20University%20Old%20Hostel%20Accra%20Ghana",
-  logo: "/images/branding/logo.png/ChatGPT Image Aug 27, 2026, 07_05_50 PM.png",
+  logo: "/images/branding/logo-image.png",
   technicianPortrait:
-    "/images/branding/technician-hero.png/ChatGPT Image Aug 27, 2026, 06_57_54 PM.png",
+    "/images/branding/technician-hero-image.png",
   description:
     "Magnanimous Electrical Services repairs and services electrical appliances, motors, AC units, phones and laptops, and supplies quality electronics — based at A.T.U Campus, Old Hostel.",
 } as const;
